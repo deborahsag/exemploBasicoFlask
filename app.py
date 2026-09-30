@@ -101,7 +101,8 @@ def atualizar_leitura(sensor_id):
 #
 #     return jsonify(resposta), 200
 
-
+def emTeste():
+    pass
 
 
 if __name__ == '__main__':
@@ -124,6 +125,7 @@ if __name__ == '__main__':
 # Use o método request.args.get('acima_de') para capturar um
 #  parâmetro na URL (ex: /sensores/clima?acima_de=30) e fazer a API retornar
 #  apenas as leituras de temperatura maiores que o valor informado.
+# Testando...
 #
 
 
