@@ -23,7 +23,18 @@ def registrar_leitura():
 # Rota para consultar o resumo das leituras (Método GET)
 @app.route('/sensores/clima', methods=['GET'])
 def listar_todos():
-    return jsonify({"total_registros": len(banco_em_memoria), "leituras": banco_em_memoria}), 200
+    args = request.args
+    if len(args) > 0:
+        acima_de = float(request.args.get('acima_de'))
+        leituras_acima = []
+
+        for leitura in banco_em_memoria:
+            if leitura['temperatura'] > acima_de:
+                leituras_acima.append(leitura)
+        return jsonify({"total_registros": len(leituras_acima), "leituras": leituras_acima}), 200
+
+    else:
+        return jsonify({"total_registros": len(banco_em_memoria), "leituras": banco_em_memoria}), 200
 
 
 # NOVA ROTA: Busca um sensor específico pelo ID passado na URL
