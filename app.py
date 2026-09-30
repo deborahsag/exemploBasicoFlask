@@ -52,6 +52,20 @@ def deletar_sensor(sensor_id):
     return jsonify({"erro": f"Sensor '{sensor_id}' não encontrado para exclusão."}), 404
 
 
+# NOVA ROTA: A rota deve buscar o sensor pelo ID e atualizar o valor da temperatura com o novo dado enviado
+@app.route('/sensores/clima/<sensor_id>', methods=['PUT'])
+def atualizar_leitura(sensor_id):
+    dados = request.get_json()
+
+    for leitura in banco_em_memoria:
+        if leitura['id'] == sensor_id:
+            leitura['temperatura'] = dados['temperatura']
+            return jsonify({"mensagem": f"Leitura do sensor '{sensor_id}' atualizada com sucesso."}), 201
+
+    # Se o laço terminar e não encontrar o ID, retorna 404 Not Found
+    return jsonify({"erro": f"Sensor '{sensor_id}' não encontrado."}), 404
+
+
 # def consultar_resumo():
 #     # Verifica se a lista está vazia para evitar erro de divisão por zero
 #     if len(banco_em_memoria) == 0:
@@ -82,13 +96,13 @@ def deletar_sensor(sensor_id):
 if __name__ == '__main__':
     app.run(debug=True)
 
-# TODO (1)
+# (1)
 # Teste de Validação (Tratamento de Erros):
 # Enviaem um POST via Postman/Insomnia/Bruno contendo apenas
 # {"temperatura": 25.0} (omitindo o ID).
 # O que aconteceu?
 #
- # TODO(2)
+# (2)
 # Implementação do Método PUT:
 #  Criar uma nova rota @app.route('/sensores/clima/<sensor_id>', methods=['PUT']).
 #  A rota deve buscar o sensor pelo ID e atualizar o
